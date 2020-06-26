@@ -1,4 +1,10 @@
+-- ** since SQLite doesnt support variable, need a workaround solution, so I keep static table names atm **
+
+-- SET @tbl_src_name='ticket_activities' 
+-- SET @tbl_dest_name='ticket_status'
+
 DROP TABLE IF EXISTS ticket_status;
+
 CREATE TABLE ticket_status
 AS
 SELECT

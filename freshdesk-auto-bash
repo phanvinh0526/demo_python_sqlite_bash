@@ -9,10 +9,11 @@ echo "
 --------------------------------------------------------------------------------
 "
 # Default variables
-NUM_TICKETS=10
+NUM_TICKETS=1000
 JSON_FILE="activities.json"
 DB_NAME="activities.db"
 TABLE_NAME="ticket_activities"
+EXAMPLE_4_TABLE_NAME="ticket_status"
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -37,7 +38,7 @@ else
 fi
 
 # Step 3
-if sqlite3 $DB_NAME '.read gen_attributes.sql';
+if sqlite3 activities.db ".read gen_attributes.sql";
 then
   printf "${GREEN}Success${NC}: Step 3 has completed.\n"
 else
