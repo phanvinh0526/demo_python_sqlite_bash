@@ -1,0 +1,46 @@
+#!/bin/bash
+
+echo "
+--------------------------------------------------------------------------------
+  This is Freshdesk program, it will execute 3 steps 
+  1. Execute 'ticket_gen.py' to generate 1000 activities as default
+  2. Execute 'json_to_sql.py' to ingest activities.json to SQLite DB
+  3. Execute 'gen_attributes.sql' to populate dummy data for 5 new attributes.
+--------------------------------------------------------------------------------
+"
+# Default variables
+NUM_TICKETS=10
+JSON_FILE="activities.json"
+DB_NAME="activities.db"
+TABLE_NAME="ticket_activities"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Step 1
+if python ticket_gen.py -n $NUM_TICKETS -o $JSON_FILE;
+then
+  printf "${GREEN}Success${NC}: Step 1 has completed.\n"
+else
+  printf "${RED}Error${NC} in step 1, error found in 'ticket_gen.py'.\n"
+  exit 1
+fi
+
+# Step 2
+if python json_to_sql.py -input $JSON_FILE -db $DB_NAME -tbl_name $TABLE_NAME;
+then
+  printf "${GREEN}Success${NC}: Step 2 has completed.\n"
+else
+  printf "${RED}Error${NC} in step 2, error found in 'json_to_sql.py'.\n"
+  exit 1
+fi
+
+# Step 3
+if sqlite3 $DB_NAME '.read gen_attributes.sql';
+then
+  printf "${GREEN}Success${NC}: Step 3 has completed.\n"
+else
+  printf "${RED}Error${NC} in step 3, error found in 'gen_attributes.sql'.\n"
+  exit 1
+fi
