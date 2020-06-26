@@ -1,18 +1,10 @@
-from __future__ import print_function
-
-import re
-import sys
 import argparse
-import numpy as np
-import json # json.dumps to encode
+import json
 import copy
 import pandas as pd
-from pandas.io.json import json_normalize
 import string
 import datetime
 import time
-from dateutil.parser import parse as parse_datetime
-
 from random import *
 
 # Set default variables values
